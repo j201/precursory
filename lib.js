@@ -9,7 +9,7 @@ var toArr = Function.prototype.call.bind(Array.prototype.slice);
 // get :: () => TValue
 // set :: TValue => void
 // onChange :: (TData => void) => void
-var precursory = function(spec) {
+var precursor = function(spec) {
 	return function(store) {
 		function cursor(entries, listeners) {
 			var getCached = false;
@@ -49,4 +49,4 @@ var precursory = function(spec) {
 	};
 };
 
-module.exports = precursory;
+module.exports = precursor;

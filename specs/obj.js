@@ -1,7 +1,7 @@
 var update = require('react/addons').addons.update;
-var precursory = require('../lib');
+var precursor = require('../lib');
 
-module.exports = precursory({
+module.exports = precursor({
 	get: function(obj, props) {
 		return props.reduce(function(acc, el) {
 			return acc[el];

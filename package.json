@@ -1,5 +1,5 @@
 {
-	"name": "precursory",
+	"name": "react-precursor",
 	"version": "1.0.0",
 	"description": "Make cursors for React from any data structure",
 	"main": "lib.js",
@@ -8,7 +8,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/j201/precursory"
+		"url": "https://github.com/j201/react-precursor"
 	},
 	"keywords": [
 		"react",
@@ -17,9 +17,9 @@
 	"author": "j201",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/j201/precursory/issues"
+		"url": "https://github.com/j201/react-precursor/issues"
 	},
-	"homepage": "https://github.com/j201/precursory",
+	"homepage": "https://github.com/j201/react-precursorprecursory",
 	"dependencies": {
 		"react": "~0.11.2"
 	},
