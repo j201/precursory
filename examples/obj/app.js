@@ -1,6 +1,6 @@
 var React = require('react');
 var dom = React.DOM;
-var cursor = require('../specs/obj');
+var cursor = require('../../specs/obj');
 
 // Stores an array of name/description objects
 var store = cursor([{name: 'Guy Incognito', desc: '(123)-456-7890'}]);
@@ -42,13 +42,22 @@ var Root = React.createClass({
 	addRow: function() {
 		this.props.store.set(this.props.store.get().concat({ name: '', desc: '' }));
 	},
+	deleteRow: function(i) {
+		// 'remove' an array element without mutating it
+		// this is why mori would be nice to use with cursors :/
+		var newRows = this.props.store.get().reduce(function(acc, el, _i) {
+			return _i === i ? acc : acc.concat(el);
+		}, []);
+		this.props.store.set(newRows);
+	},
 	render: function() {
 		var store = this.props.store;
 		var rows = store.get().map(function(row, i) {
 			return dom.tr({ key: i },
 				dom.td({}, EditableText({ value: store.enter(i, 'name') })),
-				dom.td({}, EditableText({ value: store.enter(i, 'desc') })));
-		});
+				dom.td({}, EditableText({ value: store.enter(i, 'desc') })),
+				dom.td({}, dom.button({ onClick: this.deleteRow.bind(this, i) }, 'X')));
+		}.bind(this));
 		return dom.div({},
 			dom.table({}, rows),
 			dom.button({

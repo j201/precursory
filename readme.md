@@ -16,7 +16,7 @@ I started this on October 2nd. So it's probably buggy as hell and it'll definite
 
 ##Example
 
-[See it here](https://rawgit.com/j201/precursory/master/examples/index.html) and [see the code here](https://github.com/j201/precursory/blob/master/examples/app.js).
+[See it here](https://rawgit.com/j201/precursory/master/examples/obj/index.html) and [see the code here](https://github.com/j201/precursory/blob/master/examples/obj/app.js).
 
 ##Usage
 

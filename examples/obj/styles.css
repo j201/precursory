@@ -17,6 +17,10 @@ td {
 	vertical-align: top;
 }
 
+td > button {
+	margin: 1px;
+}
+
 #react-container {
 	width: 400px;
 	margin: 100px auto;
