@@ -34,7 +34,6 @@ var EditableText = React.createClass({
 
 var Root = React.createClass({
 	addRow: function() {
-		console.log(this.props.store === store);
 		this.props.store.set(this.props.store.get().concat({ name: '', desc: '' }));
 	},
 	render: function() {
