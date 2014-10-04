@@ -1,7 +1,45 @@
-.entry {
+span.editable {
 	display: inline-block;
 	min-width: 200px;
-	min-height: 16px;
-	background-color: #ccc;
+	min-height: 21px;
+	background-color: #cef;
 	color: #006;
+	padding: 5px;
+	border-radius: 2px
+}
+
+body {
+	background-color: #ade;
+	font-family: sans-serif;
+}
+
+td {
+	vertical-align: top;
+}
+
+#react-container {
+	width: 400px;
+	margin: 100px auto;
+}
+
+button {
+	background-color: #689;
+	transition: background-color 0.2s;
+	border: none;
+	padding: 5px;
+	color: white;
+	border-radius: 4px;
+	margin: 5px;
+	box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+}
+
+button:hover {
+	background-color: #7ab;
+}
+
+button:active {
+	transition: none;
+	margin-top: 6px;
+	box-shadow: none;
+	background-color: #578;
 }

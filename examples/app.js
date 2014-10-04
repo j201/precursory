@@ -2,8 +2,10 @@ var React = require('react');
 var dom = React.DOM;
 var cursor = require('../specs/obj');
 
-var store = cursor([]);
+// Stores an array of name/description objects
+var store = cursor([{name: 'Guy Incognito', desc: '(123)-456-7890'}]);
 
+// A span with text that can be edited by clicking on it and changing the value in a text input
 var EditableText = React.createClass({
 	getInitialState: function() {
 		return { editing: false }
@@ -19,16 +21,20 @@ var EditableText = React.createClass({
 		return this.state.editing ?
 			dom.input({
 				onBlur: this.onBlur,
+				className: 'editable',
 				ref: "input"
 			}) :
 			dom.span({
-				className: 'entry',
+				className: 'editable',
 				onClick: this.onClick
 			}, this.props.value.get());
 	},
 	componentDidUpdate: function() {
-		if (this.state.editing)
-			this.refs.input.getDOMNode().focus();
+		if (this.state.editing) {
+			var input = this.refs.input.getDOMNode();
+			input.focus();
+			input.value = this.props.value.get();
+		}
 	}
 });
 

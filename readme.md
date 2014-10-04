@@ -84,6 +84,8 @@ cursor: {
 
 ##TODO
 
+- Add `remove` cursor method
+- Add `parent` cursor method?
 - Tests
 - Add a function to attach a cursor to a root element (rather than making people use onChange)
 - Allow specs to define more specific equality checks

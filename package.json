@@ -1,26 +1,31 @@
 {
-  "name": "precursory",
-  "version": "1.0.0",
-  "description": "Make cursors for React from any data structure",
-  "main": "lib.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/j201/precursory"
-  },
-  "keywords": [
-    "react",
-    "cursor"
-  ],
-  "author": "j201",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/j201/precursory/issues"
-  },
-  "homepage": "https://github.com/j201/precursory",
-  "dependencies": {
-    "react": "^0.11.2"
-  }
+	"name": "precursory",
+	"version": "1.0.0",
+	"description": "Make cursors for React from any data structure",
+	"main": "lib.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/j201/precursory"
+	},
+	"keywords": [
+		"react",
+		"cursor"
+	],
+	"author": "j201",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/j201/precursory/issues"
+	},
+	"homepage": "https://github.com/j201/precursory",
+	"dependencies": {
+		"react": "~0.11.2"
+	},
+	"devDependencies": {
+		"browserify": "~6.0.2",
+		"watchify": "~1.0.6",
+		"uglifyify": "~2.5.0"
+	}
 }
