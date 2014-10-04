@@ -15,7 +15,7 @@ var precursory = function(spec) {
 			var getCached = false;
 			var getCache;
 
-			return {
+			var self = {
 				enter: function() {
 					return cursor(entries.concat(toArr(arguments)), listeners);
 				},
@@ -33,11 +33,16 @@ var precursory = function(spec) {
 						listener(cursor([], listeners));
 					});
 				},
+				transact: function(f) {
+					self.set(f(self.get()));
+				},
 				// Doing things like cortex for simplicity for now, but really, the user shouldn't have to worry about using this
 				onChange: function(listener) {
 					listeners.push(listener);
 				}
 			};
+
+			return self;
 		}
 
 		return cursor([], []);

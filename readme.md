@@ -56,6 +56,10 @@ Returns the value stored in the cursor.
 
 Replaces the value in the cursor with `newValue`. (This will affect all parent cursors too, since they represent the same data.)
 
+**transact(f)**
+
+Replaces the value in the cursor with the result of calling `f` on the current value.
+
 **onChange(listener)**
 
 Registers `listener` so that when the value in this cursor changes, `listener` is called with a new cursor to the root data as an argument. This is a temporary way to notify React of changes, which must currently be done manually with something like `rootCursor.listen(function(newCursor) { rootComponent.setProps({ data: newCursor}); });`. Note that all cursors currently share the same set of listeners.
@@ -80,6 +84,7 @@ cursor: {
 
 ##TODO
 
+- Tests
 - Add a function to attach a cursor to a root element (rather than making people use onChange)
 - Allow specs to define more specific equality checks
 - `transact` function like Om
