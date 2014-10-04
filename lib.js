@@ -1,4 +1,4 @@
-function concat(arr, el) { return arr.concat([el]); }
+var toArr = Function.prototype.call.bind(Array.prototype.slice);
 
 // Spec input:
 // get :: (TData, TEnter[]) => TValue
@@ -8,26 +8,40 @@ function concat(arr, el) { return arr.concat([el]); }
 // enter :: TEnter => TCursor
 // get :: () => TValue
 // set :: TValue => void
-module.exports = function(get, set) {
+// onChange :: (TData => void) => void
+var precursory = function(spec) {
 	return function(store) {
-		function cursor(entries) {
+		function cursor(entries, listeners) {
 			var getCached = false;
 			var getCache;
+
 			return {
-				enter: function(entry) {
-					return cursor(concat(entries, entry));
+				enter: function() {
+					return cursor(entries.concat(toArr(arguments)), listeners);
 				},
 				get: function() {
-					if (getEvaluated) return getCache;
+					if (getCached) return getCache;
 					getCached = true;
-					getCache = get(store, entries);
+					getCache = spec.get(store, entries);
 					return getCache;
 				},
 				set: function(val) {
+					if (getCached && val === getCache) return; // TODO: more rigorous equality? maybe in the spec?
 					getCached = false;
-					store = set(store, entries, val);
+					store = spec.set(store, entries, val);
+					listeners.forEach(function(listener) {
+						listener(cursor([], listeners));
+					});
+				},
+				// Doing things like cortex for simplicity for now, but really, the user shouldn't have to worry about using this
+				onChange: function(listener) {
+					listeners.push(listener);
 				}
 			};
 		}
+
+		return cursor([], []);
 	};
 };
+
+module.exports = precursory;

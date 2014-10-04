@@ -1,0 +1,7 @@
+.entry {
+	display: inline-block;
+	min-width: 200px;
+	min-height: 16px;
+	background-color: #ccc;
+	color: #006;
+}
