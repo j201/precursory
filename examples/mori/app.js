@@ -1,9 +1,12 @@
 var React = require('react');
 var dom = React.DOM;
-var cursor = require('../../specs/obj');
+var mori = require('mori');
+var cursor = require('../../specs/mori');
+
+var append = function(x, s) { return mori.concat(s, [x]); };
 
 // Stores an array of todo objects
-var store = cursor([{desc: 'Vacuum the cat', completed: false}]);
+var store = cursor(mori.vector(mori.hash_map('desc', 'Vacuum the cat', 'completed', false)));
 
 // A span with text that can be edited by clicking on it and changing the value in a text input
 var EditableText = React.createClass({
@@ -41,12 +44,13 @@ var EditableText = React.createClass({
 var Row = React.createClass({
 	check: function() {
 		var todo = this.props.todo;
-		todo.enter('completed').set(!todo.get().completed);
+		todo.enter('completed').set(!mori.get(todo.get(), 'completed'));
 	},
 	render: function() {
 		var todo = this.props.todo;
-		return dom.li({ className: todo.get().completed ? 'completed' : '' },
-			dom.input({ type: 'checkbox', value: todo.get().completed, onChange: this.check }),
+		var completed = mori.get(todo.get(), 'completed');
+		return dom.li({ className: completed ? 'completed' : '' },
+			dom.input({ type: 'checkbox', value: completed, onChange: this.check }),
 			EditableText(todo.enter('desc')),
 			dom.button({ onClick: this.props.remove }, 'X'));
 	}
@@ -62,17 +66,14 @@ var Root = React.createClass({
 	},
 	onKeyDown: function(e) {
 		if (this.state.newTodo.length > 0 && e.key === "Enter") {
-			this.props.store.set(this.props.store.get().concat({ desc: this.state.newTodo, completed: false }));
+			this.props.store.transact(append.bind(null, mori.hash_map("desc", this.state.newTodo, "completed", false)));
 			this.setState({ newTodo: '' });
 		}
 	},
 	deleteRow: function(i) {
-		// 'remove' an array element without mutating it
-		// this is why mori would be nice to use with cursors :/
-		var newRows = this.props.store.get().reduce(function(acc, el, _i) {
-			return _i === i ? acc : acc.concat(el);
-		}, []);
-		this.props.store.set(newRows);
+		this.props.store.transact(function(rows) {
+			return mori.concat(mori.take(i, rows), mori.drop(i+1, rows));
+		});
 	},
 	render: function() {
 		var store = this.props.store;
@@ -83,7 +84,7 @@ var Root = React.createClass({
 				onKeyDown: this.onKeyDown
 			}),
 			dom.ul({},
-				store.get().map(function(row, i) {
+				mori.into_array(mori.range(mori.count(store.get()))).map(function(i) {
 					return Row({
 						todo: store.enter(i),
 						remove: this.deleteRow.bind(this, i)

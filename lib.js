@@ -28,7 +28,7 @@ var precursor = function(spec) {
 				set: function(val) {
 					if (getCached && val === getCache) return; // TODO: more rigorous equality? maybe in the spec?
 					getCached = false;
-					store = spec.set(store, entries, val);
+					store = entries.length ? spec.set(store, entries, val) : val;
 					listeners.forEach(function(listener) {
 						listener(cursor([], listeners));
 					});

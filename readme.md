@@ -76,6 +76,7 @@ cursor: {
 	enter: entry => newCursor,
 	get: () => value,
 	set: newValue => void,
+	transact: (value => newValue) => void
 	onChange: (data => void) => void
 }
 ```

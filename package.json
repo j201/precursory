@@ -19,9 +19,10 @@
 	"bugs": {
 		"url": "https://github.com/j201/react-precursor/issues"
 	},
-	"homepage": "https://github.com/j201/react-precursorprecursory",
+	"homepage": "https://github.com/j201/react-precursor",
 	"dependencies": {
-		"react": "~0.11.2"
+		"react": "~0.11.2",
+		"mori": "~0.2.9"
 	},
 	"devDependencies": {
 		"browserify": "~6.0.2",

@@ -47,3 +47,7 @@ button:active {
 	box-shadow: none;
 	background-color: #578;
 }
+
+li.completed > span {
+	text-decoration: line-through;
+}
