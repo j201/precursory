@@ -14,7 +14,7 @@ I started this on October 2nd. So it's probably buggy as hell and it'll definite
 
 ##Example
 
-[See it here](https://rawgit.com/j201/react-precursor/master/examples/obj/index.html) and [see the code here](https://github.com/j201/react-precursor/blob/master/examples/obj/app.js).
+[See it here](http://j201.github.io/react-precursor/examples/obj/index.html) and [see the code here](http://j201.github.io/react-precursor/examples/obj/app.js).
 
 ##Usage
 
