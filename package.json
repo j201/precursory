@@ -27,6 +27,8 @@
 	"devDependencies": {
 		"browserify": "~6.0.2",
 		"watchify": "~1.0.6",
-		"uglifyify": "~2.5.0"
+		"uglifyify": "~2.5.0",
+		"tape": "~3.0.0",
+		"clone": "~0.1.18"
 	}
 }
