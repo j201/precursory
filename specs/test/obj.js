@@ -46,5 +46,13 @@ tape("Sub-cursor", function(t) {
 	t.deepEquals(objCursor.get(), {a: 1, b: {c: {e: 3}}}, "set propagates to parent");
 	t.deepEquals(obj, objClone, "set doesn't mutate original");
 
+	subCursor.transact(function(obj) {
+		var result = clone(obj);
+		result.f = 4;
+		return result;
+	});
+	t.deepEquals(subCursor.get(), {e: 3, f: 4}, "transact");
+	t.deepEquals(objCursor.get(), {a: 1, b: {c: {e: 3, f: 4}}}, "transact propagates to parent");
+
 	t.end();
 });

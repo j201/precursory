@@ -30,7 +30,7 @@ var precursor = function(spec) {
 					getCached = false;
 					store = entries.length ? spec.set(store, entries, val) : val;
 					listeners.forEach(function(listener) {
-						listener(cursor([], listeners));
+						listener(self);
 					});
 				},
 				transact: function(f) {
