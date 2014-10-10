@@ -11,13 +11,13 @@ var toArr = Function.prototype.call.bind(Array.prototype.slice);
 // onChange :: (TData => void) => void
 var precursor = function(spec) {
 	return function(store) {
-		function cursor(entries, listeners) {
+		function cursor(entries, listeners, parent) {
 			var getCached = false;
 			var getCache;
 
 			var self = {
 				enter: function() {
-					return cursor(entries.concat(toArr(arguments)), listeners);
+					return cursor(entries.concat(toArr(arguments)), listeners, self);
 				},
 				get: function() {
 					if (getCached) return getCache;
@@ -27,10 +27,10 @@ var precursor = function(spec) {
 				},
 				set: function(val) {
 					if (getCached && val === getCache) return; // TODO: more rigorous equality? maybe in the spec?
-					getCached = false;
+					self._invalidate();
 					store = entries.length ? spec.set(store, entries, val) : val;
 					listeners.forEach(function(listener) {
-						listener(self);
+						listener(cursor([], listeners));
 					});
 				},
 				transact: function(f) {
@@ -39,6 +39,10 @@ var precursor = function(spec) {
 				// Doing things like cortex for simplicity for now, but really, the user shouldn't have to worry about using this
 				onChange: function(listener) {
 					listeners.push(listener);
+				},
+				_invalidate: function() {
+					getCached = false;
+					if (parent) parent._invalidate();
 				}
 			};
 
