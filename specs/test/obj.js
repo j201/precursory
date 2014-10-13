@@ -54,5 +54,14 @@ tape("Sub-cursor", function(t) {
 	t.deepEquals(subCursor.get(), {e: 3, f: 4}, "transact");
 	t.deepEquals(objCursor.get(), {a: 1, b: {c: {e: 3, f: 4}}}, "transact propagates to parent");
 
+	var unique = {};
+	var onChangeVal = unique;
+	objCursor.onChange(function(val) {
+		onChangeVal = val;
+	});
+	t.is(onChangeVal, unique, "onChange not called immediately");
+	subCursor.set({d: 2});
+	t.deepEquals(onChangeVal.get(), obj, "Subcursor changes cause onChange listeners on root to be called");
+
 	t.end();
 });
