@@ -30,25 +30,21 @@ tape("Root cursor", function(t) {
 });
 
 tape("Sub-cursor", function(t) {
-	var map = {a: 1, b: {c: {d: 2}}};
-	var mapClone = clone(map);
+	var map = M.hash_map("a", 1, "b", M.hash_map("c", M.hash_map("d", 2)));
 	var mapCursor = cursor(map);
 	var subCursor = mapCursor.enter('b', 'c');
 
-	t.deepEquals(subCursor.get(), {d: 2}, "enter and get");
+	t.ok(M.equals(subCursor.get(), M.hash_map("d", 2)), "enter and get");
 
-	subCursor.set({e: 3});
-	t.deepEquals(subCursor.get(), {e: 3}, "set");
-	t.deepEquals(mapCursor.get(), {a: 1, b: {c: {e: 3}}}, "set propagates to parent");
-	t.deepEquals(map, mapClone, "set doesn't mutate original");
+	subCursor.set(M.hash_map("e", 3));
+	t.ok(M.equals(subCursor.get(), M.hash_map("e", 3)), "set");
+	t.ok(M.equals(mapCursor.get(), M.hash_map("a", 1, "b", M.hash_map("c", M.hash_map("e", 3)))), "set propagates to parent");
 
 	subCursor.transact(function(map) {
-		var result = clone(map);
-		result.f = 4;
-		return result;
+		return M.assoc(map, "f", 4);
 	});
-	t.deepEquals(subCursor.get(), {e: 3, f: 4}, "transact");
-	t.deepEquals(mapCursor.get(), {a: 1, b: {c: {e: 3, f: 4}}}, "transact propagates to parent");
+	t.ok(M.equals(subCursor.get(), M.hash_map("e", 3, "f", 4)), "transact");
+	t.ok(M.equals(mapCursor.get(), M.hash_map("a", 1, "b", M.hash_map("c", M.hash_map("e", 3, "f", 4)))), "transact propagates to parent");
 
 	var unique = {};
 	var onChangeVal = unique;
@@ -56,8 +52,8 @@ tape("Sub-cursor", function(t) {
 		onChangeVal = val;
 	});
 	t.is(onChangeVal, unique, "onChange not called immediately");
-	subCursor.set({d: 2});
-	t.deepEquals(onChangeVal.get(), map, "Subcursor changes cause onChange listeners on root to be called");
+	subCursor.set(M.hash_map("d", 2));
+	t.ok(M.equals(onChangeVal.get(), map), "Subcursor changes cause onChange listeners on root to be called");
 
 	t.end();
 });
