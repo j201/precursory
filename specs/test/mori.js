@@ -36,6 +36,8 @@ tape("Sub-cursor", function(t) {
 
 	t.ok(M.equals(subCursor.get(), M.hash_map("d", 2)), "enter and get");
 
+	t.ok(M.equals(subCursor.parent().get(), M.hash_map("c", M.hash_map("d", 2))), "enter and get");
+
 	subCursor.set(M.hash_map("e", 3));
 	t.ok(M.equals(subCursor.get(), M.hash_map("e", 3)), "set");
 	t.ok(M.equals(mapCursor.get(), M.hash_map("a", 1, "b", M.hash_map("c", M.hash_map("e", 3)))), "set propagates to parent");

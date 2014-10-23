@@ -11,13 +11,18 @@ var toArr = Function.prototype.call.bind(Array.prototype.slice);
 // onChange :: (TData => void) => void
 var precursor = function(spec) {
 	return function(store) {
-		function cursor(entries, listeners, parent) {
+		function cursor(entries, listeners, ancestor) {
 			var getCached = false;
 			var getCache;
 
 			var self = {
 				enter: function() {
 					return cursor(entries.concat(toArr(arguments)), listeners, self);
+				},
+				parent: function() {
+					if (entries.length === 0)
+						throw Error("parent() called on root cursor");
+					return cursor(entries.slice(0, -1), listeners, self);
 				},
 				get: function() {
 					if (getCached) return getCache;
@@ -42,7 +47,7 @@ var precursor = function(spec) {
 				},
 				_invalidate: function() {
 					getCached = false;
-					if (parent) parent._invalidate();
+					if (ancestor) ancestor._invalidate();
 				}
 			};
 

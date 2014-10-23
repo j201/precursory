@@ -41,6 +41,8 @@ tape("Sub-cursor", function(t) {
 
 	t.deepEquals(subCursor.get(), {d: 2}, "enter and get");
 
+	t.deepEquals(subCursor.parent().get(), {c: {d: 2}}, "parent");
+
 	subCursor.set({e: 3});
 	t.deepEquals(subCursor.get(), {e: 3}, "set");
 	t.deepEquals(objCursor.get(), {a: 1, b: {c: {e: 3}}}, "set propagates to parent");
