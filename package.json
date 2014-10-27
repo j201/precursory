@@ -1,14 +1,14 @@
 {
-	"name": "react-precursor",
-	"version": "1.0.0",
+	"name": "precursory",
+	"version": "0.0.0",
 	"description": "Make cursors for React from any data structure",
 	"main": "lib.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "node specs/test/mori.js && node specs/test/obj.js"
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/j201/react-precursor"
+		"url": "https://github.com/j201/precursory"
 	},
 	"keywords": [
 		"react",
@@ -17,9 +17,9 @@
 	"author": "j201",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/j201/react-precursor/issues"
+		"url": "https://github.com/j201/precursory/issues"
 	},
-	"homepage": "https://github.com/j201/react-precursor",
+	"homepage": "https://github.com/j201/precursory",
 	"dependencies": {
 		"react": "~0.11.2",
 		"mori": "~0.2.9"
