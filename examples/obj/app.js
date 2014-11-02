@@ -1,6 +1,6 @@
 var React = require('react');
 var dom = React.DOM;
-var cursor = require('../../specs/obj');
+var cursor = require('../../obj');
 
 // Stores an array of todo objects
 var store = cursor([{desc: 'Vacuum the cat', completed: false}]);

@@ -1,5 +1,5 @@
 var mori = require('mori');
-var precursory = require('../lib');
+var precursory = require('./lib');
 
 function enter(data, key) {
 	return mori.is_associative(data) ?

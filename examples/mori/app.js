@@ -1,7 +1,7 @@
 var React = require('react');
 var dom = React.DOM;
 var M = require('mori');
-var cursor = require('../../specs/mori');
+var cursor = require('../../mori');
 
 var append = function(x, s) { return M.concat(s, [x]); };
 
