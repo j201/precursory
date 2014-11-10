@@ -1,12 +1,12 @@
 var React = require('react');
 var dom = React.DOM;
-var mori = require('mori');
-var cursor = require('../../specs/mori');
+var M = require('mori');
+var cursor = require('../../mori');
 
-var append = function(x, s) { return mori.concat(s, [x]); };
+var append = function(x, s) { return M.concat(s, [x]); };
 
 // Stores an array of todo objects
-var store = cursor(mori.vector(mori.hash_map('desc', 'Vacuum the cat', 'completed', false)));
+var store = cursor(M.vector(M.hash_map('desc', 'Vacuum the cat', 'completed', false)));
 
 // A span with text that can be edited by clicking on it and changing the value in a text input
 var EditableText = React.createClass({
@@ -14,7 +14,7 @@ var EditableText = React.createClass({
 		return { editing: false }
 	},
 	onBlur: function(e) {
-		this.props.set(e.target.value);
+		if (e.target.value) this.props.set(e.target.value);
 		this.setState({editing: false});
 	},
 	onClick: function() {
@@ -44,15 +44,15 @@ var EditableText = React.createClass({
 var Row = React.createClass({
 	check: function() {
 		var todo = this.props.todo;
-		todo.enter('completed').set(!mori.get(todo.get(), 'completed'));
+		todo.enter('completed').set(!M.get(todo.get(), 'completed'));
 	},
 	render: function() {
 		var todo = this.props.todo;
-		var completed = mori.get(todo.get(), 'completed');
+		var completed = M.get(todo.get(), 'completed');
 		return dom.li({ className: completed ? 'completed' : '' },
-			dom.input({ type: 'checkbox', value: completed, onChange: this.check }),
+			dom.button({ className: 'check-button', onClick: this.check }, '✓'),
 			EditableText(todo.enter('desc')),
-			dom.button({ onClick: this.props.remove }, 'X'));
+			dom.button({ className: 'delete-button', onClick: this.props.remove }, 'X'));
 	}
 });
 
@@ -66,13 +66,13 @@ var Root = React.createClass({
 	},
 	onKeyDown: function(e) {
 		if (this.state.newTodo.length > 0 && e.key === "Enter") {
-			this.props.store.transact(append.bind(null, mori.hash_map("desc", this.state.newTodo, "completed", false)));
+			this.props.store.transact(append.bind(null, M.hash_map("desc", this.state.newTodo, "completed", false)));
 			this.setState({ newTodo: '' });
 		}
 	},
 	deleteRow: function(i) {
 		this.props.store.transact(function(rows) {
-			return mori.concat(mori.take(i, rows), mori.drop(i+1, rows));
+			return M.concat(M.take(i, rows), M.drop(i+1, rows));
 		});
 	},
 	render: function() {
@@ -81,10 +81,11 @@ var Root = React.createClass({
 			dom.input({
 				value: this.state.newTodo,
 				onChange: this.updateNewTodo,
-				onKeyDown: this.onKeyDown
+				onKeyDown: this.onKeyDown,
+				placeholder: "New todo"
 			}),
 			dom.ul({},
-				mori.into_array(mori.range(mori.count(store.get()))).map(function(i) {
+				M.into_array(M.range(M.count(store.get()))).map(function(i) {
 					return Row({
 						todo: store.enter(i),
 						remove: this.deleteRow.bind(this, i)

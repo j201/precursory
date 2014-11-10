@@ -1,5 +1,5 @@
 var mori = require('mori');
-var precursor = require('../lib');
+var precursory = require('./lib');
 
 function enter(data, key) {
 	return mori.is_associative(data) ?
@@ -13,7 +13,7 @@ function set(data, key, val) {
 		mori.concat(mori.take(key, data), mori.cons(val, mori.drop(key+1, data)));
 }
 
-module.exports = precursor({
+module.exports = precursory({
 	get: function(data, entries) {
 		return entries.reduce(enter, data);
 	},

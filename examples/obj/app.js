@@ -1,6 +1,6 @@
 var React = require('react');
 var dom = React.DOM;
-var cursor = require('../../specs/obj');
+var cursor = require('../../obj');
 
 // Stores an array of todo objects
 var store = cursor([{desc: 'Vacuum the cat', completed: false}]);
@@ -46,9 +46,9 @@ var Row = React.createClass({
 	render: function() {
 		var todo = this.props.todo;
 		return dom.li({ className: todo.get().completed ? 'completed' : '' },
-			dom.input({ type: 'checkbox', value: todo.get().completed, onChange: this.check }),
+			dom.button({ className: 'check-button', onClick: this.check }, '✓'),
 			EditableText(todo.enter('desc')),
-			dom.button({ onClick: this.props.remove }, 'X'));
+			dom.button({ className: 'delete-button', onClick: this.props.remove }, 'X'));
 	}
 });
 
@@ -80,7 +80,8 @@ var Root = React.createClass({
 			dom.input({
 				value: this.state.newTodo,
 				onChange: this.updateNewTodo,
-				onKeyDown: this.onKeyDown
+				onKeyDown: this.onKeyDown,
+				placeholder: "New todo"
 			}),
 			dom.ul({},
 				store.get().map(function(row, i) {
