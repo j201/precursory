@@ -6,6 +6,7 @@ var toArr = Function.prototype.call.bind(Array.prototype.slice);
 
 // Cursor methods:
 // enter :: TEnter => TCursor
+// parent :: () => TCursor
 // get :: () => TValue
 // set :: TValue => void
 // transact :: (TValue => TValue) => void

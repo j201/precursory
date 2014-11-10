@@ -1,7 +1,7 @@
 {
 	"name": "precursory",
 	"version": "0.0.0",
-	"description": "Make cursors for React from any data structure",
+	"description": "Make cursors from any data structure. Includes cursors for mori associative structures and JS objects.",
 	"main": "lib.js",
 	"scripts": {
 		"test": "node test/mori.js && node test/obj.js"
@@ -12,6 +12,7 @@
 	},
 	"keywords": [
 		"react",
+		"mori",
 		"cursor"
 	],
 	"author": "j201",
