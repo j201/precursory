@@ -14,7 +14,7 @@ var EditableText = React.createClass({
 		return { editing: false }
 	},
 	onBlur: function(e) {
-		this.props.set(e.target.value);
+		if (e.target.value) this.props.set(e.target.value);
 		this.setState({editing: false});
 	},
 	onClick: function() {
@@ -50,9 +50,9 @@ var Row = React.createClass({
 		var todo = this.props.todo;
 		var completed = M.get(todo.get(), 'completed');
 		return dom.li({ className: completed ? 'completed' : '' },
-			dom.input({ type: 'checkbox', value: completed, onChange: this.check }),
+			dom.button({ className: 'check-button', onClick: this.check }, '✓'),
 			EditableText(todo.enter('desc')),
-			dom.button({ onClick: this.props.remove }, 'X'));
+			dom.button({ className: 'delete-button', onClick: this.props.remove }, 'X'));
 	}
 });
 
@@ -81,7 +81,8 @@ var Root = React.createClass({
 			dom.input({
 				value: this.state.newTodo,
 				onChange: this.updateNewTodo,
-				onKeyDown: this.onKeyDown
+				onKeyDown: this.onKeyDown,
+				placeholder: "New todo"
 			}),
 			dom.ul({},
 				M.into_array(M.range(M.count(store.get()))).map(function(i) {

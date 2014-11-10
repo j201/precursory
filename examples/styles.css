@@ -1,16 +1,23 @@
+@import url(http://fonts.googleapis.com/css?family=Noto+Sans);
+
 span.editable {
 	display: inline-block;
-	min-width: 200px;
 	min-height: 21px;
-	background-color: #cef;
+	background-color: white;
 	color: #006;
-	padding: 5px;
-	border-radius: 2px
+	padding: 5px 6px;
+	border-radius: 2px;
+	cursor: pointer;
+	height: 25px;
+}
+
+input.editable {
+	height: 25px;
 }
 
 body {
 	background-color: #ade;
-	font-family: sans-serif;
+	font-family: "Noto Sans", sans-serif;
 }
 
 td {
@@ -27,27 +34,50 @@ td > button {
 }
 
 button {
-	background-color: #689;
+	background-color: #eee;
 	transition: background-color 0.2s;
 	border: none;
-	padding: 5px;
-	color: white;
+	padding: 2px;
+	color: black;
 	border-radius: 4px;
 	margin: 5px;
 	box-shadow: 0 2px 0 rgba(0,0,0,0.1);
+	font-weight: bold;
+	height: 25px;
+	width: 22px;
+	cursor: pointer;
 }
 
 button:hover {
-	background-color: #7ab;
+	background-color: #fc9;
 }
 
 button:active {
 	transition: none;
 	margin-top: 6px;
 	box-shadow: none;
-	background-color: #578;
+	background-color: #eb8;
+}
+
+button.delete-button {
+	float: right;
+}
+
+ul {
+	padding: 0;
 }
 
 li.completed > span {
 	text-decoration: line-through;
 }
+
+li {
+	list-style-type: none;
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+	margin: 2px 0;
+	padding: 2px 0;
+	border-radius: 4px;
+	overflow: hidden;
+	background-color: rgba(255,255,255,0.5);
+}
+

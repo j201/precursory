@@ -8,6 +8,7 @@ var toArr = Function.prototype.call.bind(Array.prototype.slice);
 // enter :: TEnter => TCursor
 // get :: () => TValue
 // set :: TValue => void
+// transact :: (TValue => TValue) => void
 // onChange :: (TData => void) => void
 var precursory = function(spec) {
 	return function(store) {
@@ -41,7 +42,6 @@ var precursory = function(spec) {
 				transact: function(f) {
 					self.set(f(self.get()));
 				},
-				// Doing things like cortex for simplicity for now, but really, the user shouldn't have to worry about using this
 				onChange: function(listener) {
 					listeners.push(listener);
 				},

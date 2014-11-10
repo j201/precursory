@@ -4,8 +4,7 @@
 	"description": "Make cursors for React from any data structure",
 	"main": "lib.js",
 	"scripts": {
-		"test": "node test/mori.js && node test/obj.js",
-		"prepublish": "cd examples/mori && build && cd ../obj && build"
+		"test": "node test/mori.js && node test/obj.js"
 	},
 	"repository": {
 		"type": "git",
