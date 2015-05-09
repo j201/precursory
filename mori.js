@@ -2,13 +2,13 @@ var mori = require('mori');
 var precursory = require('./lib');
 
 function enter(data, key) {
-	return mori.is_associative(data) ?
+	return mori.isAssociative(data) ?
 		mori.get(data, key) :
 		mori.nth(data, key);
 }
 
 function set(data, key, val) {
-	return mori.is_associative(data) ?
+	return mori.isAssociative(data) ?
 		mori.assoc(data, key, val) :
 		mori.concat(mori.take(key, data), mori.cons(val, mori.drop(key+1, data)));
 }

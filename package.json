@@ -1,35 +1,35 @@
 {
-	"name": "precursory",
-	"version": "0.0.0",
-	"description": "Make cursors from any data structure. Includes cursors for mori associative structures and JS objects.",
-	"main": "lib.js",
-	"scripts": {
-		"test": "node test/mori.js && node test/obj.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/j201/precursory"
-	},
-	"keywords": [
-		"react",
-		"mori",
-		"cursor"
-	],
-	"author": "j201",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/j201/precursory/issues"
-	},
-	"homepage": "https://github.com/j201/precursory",
-	"dependencies": {
-		"react": "~0.11.2",
-		"mori": "~0.2.9"
-	},
-	"devDependencies": {
-		"browserify": "~6.0.2",
-		"watchify": "~1.0.6",
-		"uglifyify": "~2.5.0",
-		"tape": "~3.0.0",
-		"clone": "~0.1.18"
-	}
+  "name": "precursory",
+  "version": "0.0.1",
+  "description": "Make cursors from any data structure. Includes cursors for mori associative structures and JS objects.",
+  "main": "lib.js",
+  "scripts": {
+    "test": "node test/mori.js && node test/obj.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/j201/precursory"
+  },
+  "keywords": [
+    "react",
+    "mori",
+    "cursor"
+  ],
+  "author": "j201",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/j201/precursory/issues"
+  },
+  "homepage": "https://github.com/j201/precursory",
+  "dependencies": {
+    "react": "~0.13.3",
+    "mori": "~0.3.2"
+  },
+  "devDependencies": {
+    "browserify": "~6.0.2",
+    "watchify": "~1.0.6",
+    "uglifyify": "~2.5.0",
+    "tape": "~3.0.0",
+    "clone": "~0.1.18"
+  }
 }
