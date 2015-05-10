@@ -8,11 +8,16 @@ tape("Root cursor", function(t) {
 	var objCursor = cursor(obj);
 
 	t.deepEquals(objCursor.get(), obj, "get");
+	t.deepEquals(objCursor(), obj, "get as function");
 
 	var newObj = {a: 2, c: {d: 3}};
 	objCursor.set(newObj);
 	t.deepEquals(objCursor.get(), newObj, "set");
 	t.deepEquals(obj, objClone, "set doesn't mutate original");
+
+	var objCursor2 = cursor(obj);
+	objCursor2(newObj);
+	t.deepEquals(objCursor2.get(), newObj, "set as function");
 
 	objCursor.transact(function(obj) {
 		var result = clone(obj);

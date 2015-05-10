@@ -7,10 +7,15 @@ tape("Root cursor", function(t) {
 	var mapCursor = cursor(map);
 
 	t.deepEquals(mapCursor.get(), map, "get");
+	t.deepEquals(mapCursor(), map, "get as function");
 
 	var newMap = M.hashMap("a", 2, "c", M.hashMap("d", 3));
 	mapCursor.set(newMap);
 	t.ok(M.equals(mapCursor.get(), newMap), "set");
+
+	var mapCursor2 = cursor(map);
+	mapCursor2(newMap);
+	t.ok(M.equals(mapCursor2.get(), newMap), "set as function");
 
 	mapCursor.transact(function(map) {
 		return M.assocIn(map, ["c", "d"], 4);

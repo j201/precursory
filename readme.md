@@ -31,6 +31,10 @@ var moriCursor = require('precursory/mori'); // To use the included mori cursors
 var myCursor = moriCursor(mori.hash_map('a', mori.hash_map('b', 1)));
 myCursor.enter('a', 'b').set(2);
 myCursor.get(); // {"a" {"b" 2}}
+
+// You can also use jQuery/Knockout-style get and set:
+myCursor.enter('a')('foo');
+myCursor(); // {"a" "foo"}
 ```
 
 ##Making your own cursors
@@ -69,9 +73,17 @@ Returns the parent of the cursor. That is, the cursor with all of the entries pa
 
 Returns the value stored in the cursor.
 
+**()**
+
+Same as `get`
+
 **set(newValue)**
 
 Replaces the value in the cursor with `newValue`. (This will affect all parent cursors too, since they represent the same data.)
+
+**(newValue)**
+
+Same as `set`
 
 **transact(f)**
 
@@ -106,7 +118,10 @@ spec: {
 
 precursory: spec => (data => cursor)
 
-cursor: {
+cursor: () => value
+        newValue => void
+
+cursor methods: {
 	enter: (...entries) => newCursor,
 	parent: () => newCursor,
 	get: () => value,
