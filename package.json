@@ -1,6 +1,6 @@
 {
   "name": "precursory",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Make cursors from any data structure. Includes cursors for mori associative structures and JS objects.",
   "main": "lib.js",
   "scripts": {

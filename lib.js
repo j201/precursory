@@ -14,10 +14,12 @@ var toArr = Function.prototype.call.bind(Array.prototype.slice);
 // get :: () => TValue
 // set :: TValue => void
 // transact :: (TValue => TValue) => void
+// path :: () => TEnter[]
 // onChange :: (TData => void) => void
+// forceChange :: (TEnter[]?) => void
 var precursory = function(spec) {
 	return function(store) {
-		function cursor(entries, listeners, ancestor) {
+		function cursor(entries, listeners, parent) {
 			var getCached = false;
 			var getCache;
 
@@ -28,13 +30,21 @@ var precursory = function(spec) {
 			};
 
 			self.enter = function() {
-				return cursor(entries.concat(toArr(arguments)), listeners, self);
+				var keys = toArr(arguments);
+				var child = cursor(entries.concat(keys.slice(0, 1)), [], self);
+				return keys.length === 1 ?
+					child :
+					child.enter.apply(child, keys.slice(1));
 			};
 
 			self.parent = function() {
 				if (entries.length === 0)
 					throw Error("parent() called on root cursor");
-				return cursor(entries.slice(0, -1), listeners, self);
+				return parent;
+			};
+
+			self.path = function() {
+				return entries;
 			};
 
 			self.get = function() {
@@ -48,9 +58,7 @@ var precursory = function(spec) {
 				if (getCached && val === getCache) return; // TODO: more rigorous equality? maybe in the spec?
 				self._invalidate();
 				store = entries.length ? spec.set(store, entries, val) : val;
-				listeners.forEach(function(listener) {
-					listener(cursor([], listeners));
-				});
+				self.forceChange();
 			};
 
 			self.transact = function(f) {
@@ -61,9 +69,17 @@ var precursory = function(spec) {
 				listeners.push(listener);
 			};
 
+			self.forceChange = function(path) {
+				path = path || entries;
+				listeners.forEach(function(listener) {
+					listener(path); // This previously created a copy of the root cursor - I'm not sure why
+				});
+				if (parent) parent.forceChange(path);
+			};
+
 			self._invalidate = function() {
 				getCached = false;
-				if (ancestor) ancestor._invalidate();
+				if (parent) parent._invalidate();
 			};
 
 			return self;

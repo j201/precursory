@@ -89,9 +89,17 @@ Same as `set`
 
 Replaces the value in the cursor with the result of calling `f` on the current value.
 
+**path()**
+
+Returns an array of the keys that have been passed to `enter` to get to the current cursor value.
+
 **onChange(listener)**
 
-Registers `listener` so that when the value in this cursor changes, `listener` is called with a new cursor to the root data as an argument. This is a temporary way to notify React of changes, which must currently be done manually with something like `rootCursor.listen(function(newCursor) { rootComponent.setProps({ data: newCursor}); });`. Note that all cursors currently share the same set of listeners.
+Registers `listener` so that when the value in this cursor changes, `listener` is called with the array of keys (the same as `path()`) for the cursor where `set` was called. Listeners on the parent are then also called up to the root cursor.
+
+**forceChange()**
+
+Causes the onChange listeners to run.
 
 ##Use with React
 
@@ -103,8 +111,8 @@ var store = cursor([{desc: 'Vacuum the cat', completed: false}]);
 
 var myRoot = React.renderComponent(Root({ store: store }), document.getElementById('react-container'));
 
-store.onChange(function(newStore) {
-	myRoot.setProps({ store: newStore });
+store.onChange(function() {
+	myRoot.forceUpdate();
 });
 ```
 
@@ -127,7 +135,9 @@ cursor methods: {
 	get: () => value,
 	set: newValue => void,
 	transact: (value => newValue) => void
+	path: () => entries[]
 	onChange: (data => void) => void
+	forceChange: () => void
 }
 ```
 

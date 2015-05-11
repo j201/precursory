@@ -29,7 +29,14 @@ tape("Root cursor", function(t) {
 	});
 	t.is(onChangeVal, unique, "onChange not called immediately");
 	mapCursor.set(map);
-	t.is(onChangeVal.get(), map, "onChange returns a cursor of the new value");
+	t.deepEquals(onChangeVal, [], "onChange returns the path of the change");
+
+	var called = false;
+	mapCursor.onChange(function() {
+		called = true;
+	});
+	mapCursor.forceChange();
+	t.ok(called, "forceChange");
 
 	t.end();
 });
@@ -42,6 +49,8 @@ tape("Sub-cursor", function(t) {
 	t.ok(M.equals(subCursor.get(), M.hashMap("d", 2)), "enter and get");
 
 	t.ok(M.equals(subCursor.parent().get(), M.hashMap("c", M.hashMap("d", 2))), "enter and get");
+
+	t.deepEquals(subCursor.path(), ['b', 'c'], "path");
 
 	subCursor.set(M.hashMap("e", 3));
 	t.ok(M.equals(subCursor.get(), M.hashMap("e", 3)), "set");
@@ -60,7 +69,7 @@ tape("Sub-cursor", function(t) {
 	});
 	t.is(onChangeVal, unique, "onChange not called immediately");
 	subCursor.set(M.hashMap("d", 2));
-	t.ok(M.equals(onChangeVal.get(), map), "Subcursor changes cause onChange listeners on root to be called");
+	t.deepEquals(onChangeVal, ['b', 'c'], "Subcursor changes cause onChange listeners on root to be called");
 
 	t.end();
 });
