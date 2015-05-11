@@ -31,7 +31,7 @@ var precursory = function(spec) {
 
 			self.enter = function() {
 				var keys = toArr(arguments);
-				var child = cursor(entries.concat(keys.slice(0, 1)), [], self);
+				var child = cursor(entries.concat(keys.slice(0, 1)), listeners, self);
 				return keys.length === 1 ?
 					child :
 					child.enter.apply(child, keys.slice(1));
@@ -66,15 +66,18 @@ var precursory = function(spec) {
 			};
 
 			self.onChange = function(listener) {
-				listeners.push(listener);
+				listeners.push({ path: self.path(), fn: listener });
 			};
 
 			self.forceChange = function(path) {
 				path = path || entries;
 				listeners.forEach(function(listener) {
-					listener(path); // This previously created a copy of the root cursor - I'm not sure why
+					// Only call listeners registered on parents
+					if (listener.path.every(function (s, i) {
+						return s === entries[i];
+					}))
+						listener.fn(path); // This previously created a copy of the root cursor - I'm not sure why
 				});
-				if (parent) parent.forceChange(path);
 			};
 
 			self._invalidate = function() {

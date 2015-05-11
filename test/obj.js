@@ -75,9 +75,24 @@ tape("Sub-cursor", function(t) {
 	objCursor.onChange(function(val) {
 		onChangeVal = val;
 	});
+
+	var subCursor2 = objCursor.enter('b', 'c');
+	var onChangeVal2 = unique;
+	subCursor2.onChange(function(val) {
+		onChangeVal2 = val;
+	});
+
+	var subCursor3 = objCursor.enter('b', 'c', 'd');
+	var onChangeVal3 = unique;
+	subCursor3.onChange(function(val) {
+		onChangeVal3 = val;
+	});
+
 	t.is(onChangeVal, unique, "onChange not called immediately");
 	subCursor.set({d: 2});
 	t.deepEquals(onChangeVal, ['b', 'c'], "Subcursor changes cause onChange listeners on root to be called");
+	t.deepEquals(onChangeVal2, ['b', 'c'], "Subcursor changes cause onChange listeners on other copies of the same path to be called");
+	t.deepEquals(onChangeVal3, unique, "Subcursor changes don't cause onChange listeners on children to be called");
 
 	t.end();
 });
