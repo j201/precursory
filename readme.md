@@ -1,19 +1,19 @@
-#precursory
+# precursory
 
 Make cursors from any data structure. Includes cursors for mori associative structures and JS objects.
 
 ---
 
-##Rationale
+## Rationale
 
 A few implementations have been made for JS cursors in React, for example, [Cortex](https://github.com/mquan/cortex) and [react-cursor](https://github.com/dustingetz/react-cursor). (Quick summary: ClojureScript's Om introduced cursors, which allow you to scope a part of a UI to a part of your app's state while applying state updates to the entire state. They allow you to keep state centralized and easy to manage without having to deal with extremely nested manipulations.) However, they deal with native JS objects, which limits your choice of how you want to represent application state. For example, if you want to use [mori](http://swannodette.github.io/mori/) structures, you're out of luck. So this library lets you construct a cursor implementation given a couple of simple functions you provide for your data structure of choice.
 
-##Example
+## Example
 
 - [Mori example](http://j201.github.io/precursory/examples/mori/index.html) and [code](http://j201.github.io/precursory/examples/mori/app.js)
 - [Object example](http://j201.github.io/precursory/examples/obj/index.html) and [code](http://j201.github.io/precursory/examples/obj/app.js)
 
-##Usage
+## Usage
 
 ```
 npm install precursory
@@ -37,11 +37,11 @@ myCursor.enter('a')('foo');
 myCursor(); // {"a" "foo"}
 ```
 
-##Making your own cursors
+## Making your own cursors
 
 So the kind of data structure you'd use is one that's a container for other data, where a subset of that data can also be retrieved by moving into a part of the data structure. An example would be a nested JS object where a subset of the data could be retrieved by moving to a property of that object. In general, the data structure has an operation (called `enter` here) that, when passed some value, returns a substructure. You could also take an array of such values (called `entries` here) and go arbitrarily deep into the data structure (something like `subStructure = entries.reduce(enter, dataStructure)`). These ideas are important in setting up a data structure for use with precursory.
 
-###Data Structure Specs
+### Data Structure Specs
 
 First of all, you need a spec that will tell precursory how to handle your data structure. It should be an object containing the following functions as properties:
 
@@ -53,11 +53,11 @@ Given an array `entries`, returns the value produced by `enter`ing into `data` u
 
 Given an array `entries`, returns the value produced by `enter`ing into `data` using each value from `entries` in order and replacing the resulting value with the `value` argument. **The original data structure should not be modified; a new one should be returned.** An example would be that `set({a: {b: {c: 1}}}, ['a', 'b'], {d: 2})` should return `{a: {b: {d: 2}}}`.
 
-###precursory(spec)
+### precursory(spec)
 
 Once you have such a spec, pass it to the function exported by precursory. This will return a cursor builder function that can handle your data structure. When you call this new function with an instance of your data structure, it will return a cursor for that data!
 
-###Methods of cursors
+### Methods of cursors
 
 Once you have a cursor, you can call the following functions on it:
 
@@ -101,7 +101,7 @@ Registers `listener` so that when the value in this cursor changes, `listener` i
 
 Causes the onChange listeners to run.
 
-##Use with React
+## Use with React
 
 Im order to notify React of updates, attach a listener to your cursor using `onChange`:
 
@@ -116,7 +116,7 @@ store.onChange(function() {
 });
 ```
 
-##Cheat Sheet
+## Cheat Sheet
 
 ```
 spec: {
@@ -141,10 +141,10 @@ cursor methods: {
 }
 ```
 
-##Tests
+## Tests
 
 ```
 npm test
 ```
 
-©2014 j201, Licensed under the [MIT Licence](http://opensource.org/licenses/MIT).
+©2014-2017 j201, Licensed under the [MIT Licence](http://opensource.org/licenses/MIT).
